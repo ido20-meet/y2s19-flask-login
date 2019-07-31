@@ -30,16 +30,20 @@ def signup():
     return home()
 
 
-@app.route('/logged-in')
+@app.route('/logged_in', methods=['POST', 'GET'])
 def logged_in():
     return render_template('logged.html')
 
 
 @app.route('/logout')
 def logout():
-    return home()
-
-
+	login_session.clear()
+	return home()
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/add_food', methods=['POST', 'GET'])
+def add_food():
+	food(get_user( login_session['name']),request.form["fav_food"])
+	return render_template("logged.html")
